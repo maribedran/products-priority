@@ -48,3 +48,7 @@ class UpdateProductViewTest(TestCase):
 
         self.assertEqual(200, response.status_code)
         self.assertTrue(Product.objects.get().priority)
+
+    def test_view_allows_only_updating_priority_field(self):
+        response = self.client.post(self.url, {'name': 'Name'})
+        self.assertEqual(403, response.status_code)
