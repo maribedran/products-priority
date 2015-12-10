@@ -35,3 +35,16 @@ class ListProductsViewTest(TestCase):
             },
         ]
         self.assertEqual(expected_data, json.loads(response.content))
+
+
+class UpdateProductViewTest(TestCase):
+
+    def setUp(self):
+        self.url = reverse('api:update_product', args=[42])
+        self.product = mommy.make(Product, id=42, priority=False)
+
+    def test_post_updates_product_correctly(self):
+        response = self.client.post(self.url, {'priority': True})
+
+        self.assertEqual(200, response.status_code)
+        self.assertTrue(Product.objects.get().priority)
