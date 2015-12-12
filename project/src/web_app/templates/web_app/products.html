@@ -1,0 +1,42 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <title>Products</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script>
+      var productsApp = angular.module('productsApp', []);
+
+      productsApp.controller('productsCtrl', function ($scope, $http) {
+        $http.get('http://localhost:8000/api/list-products/').success(function(data) {
+          $scope.products = data;
+        });
+      });
+    </script>
+  </head>
+  <body>
+    {% verbatim %}
+    <div class="container" ng-app="productsApp">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-text" href="/">Products</a>
+          </div>
+        </div>
+      </nav>
+        <table ng-controller="productsCtrl" class="table table-striped">
+          <tr ng-repeat="product in products | orderBy: 'priority'">
+            <td>{{ product.name }}</td>
+            <td>
+              <span class="glyphicon glyphicon-remove" ng-if="product.priority === true"></span>
+              <span class="glyphicon glyphicon-ok" ng-if="product.priority === false"></span>
+            </td>
+          </tr>
+        </table>
+    </div>
+    {% endverbatim %}
+  </body>
+</html>
