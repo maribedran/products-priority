@@ -29,3 +29,8 @@ Django app for displaying products
   $ sudo -u postgres psql products < data.sql
 ```
 
+## Loading the database
+
+```
+  $ python manage.py loaddata products.json
+```
