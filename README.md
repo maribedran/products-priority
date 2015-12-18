@@ -21,6 +21,7 @@ Django app for displaying products
   # CREATE DATABASE products;
   # CREATE USER admin WITH PASSWORD 'admin';
   # GRANT ALL PRIVILEGES ON DATABASE products TO admin;
+  # ALTER USER admin CREATEDB;
   # \q
 ```
 
