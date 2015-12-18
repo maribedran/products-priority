@@ -2,24 +2,35 @@
 {% load staticfiles %}
 {% block content %}
 {% verbatim %}
-<div class="container" ng-app="productsApp">
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-text" href="/">Products</a>
-      </div>
+<div class="container" ng-app="productsApp"
+    <div class="container" ng-app="productsApp">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-text" href="/">Products</a>
+          </div>
+        </div>
+      </nav>
+        <table ng-controller="productsCtrl" class="table table-striped" ng-init="page.get_products()">
+		  <tr>
+			  <td><button ng-click="page.bulk_update(true)" >Priority</button></td>
+			  <td><button ng-click="page.bulk_update(false)">Not Priority</button></td>
+			  <td><button ng_click="page.clean_update()">Clean</button></td>
+		  </tr>
+          <tr ng-repeat="product in page.products | orderBy: '-priority'">
+            <td>{{ product.name }}</td>
+			<td><input type="checkbox" ng-click="page.toggle_mark_update(product)" ng-checked="page.check_update(product)"></td>
+            <td>
+				<span class="glyphicon" ng-click="page.toggle_priority(product)" ng-class="{'glyphicon-remove': !!product.priority, 'glyphicon-ok': !product.priority}"</span>
+            </td>
+          </tr>
+		  <tr>
+			  <td><button ng-click="page.bulk_update(true)" >Priority</button></td>
+			  <td><button ng-click="page.bulk_update(false)">Not Priority</button></td>
+			  <td><button ng_click="page.clean_update()">Clean</button></td>
+		  </tr>
+        </table>
     </div>
-  </nav>
-    <table ng-controller="productsCtrl" class="table table-striped">
-      <tr ng-repeat="product in products | orderBy: 'priority'">
-        <td>{{ product.name }}</td>
-        <td>
-          <span class="glyphicon glyphicon-remove" ng-if="product.priority === true"></span>
-          <span class="glyphicon glyphicon-ok" ng-if="product.priority === false"></span>
-        </td>
-      </tr>
-    </table>
-</div>
 {% endverbatim %}
 <script src="{% static 'js/products_app.js' %}"></script>
 {% endblock content %}
