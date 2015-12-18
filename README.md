@@ -25,10 +25,6 @@ Django app for displaying products
   # \q
 ```
 
-```shell
-  $ sudo -u postgres psql products < data.sql
-```
-
 ## Loading the database
 
 ```
