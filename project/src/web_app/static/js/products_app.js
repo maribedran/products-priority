@@ -44,11 +44,13 @@ productsApp.controller('productsCtrl', function ($scope, $http) {
   page.clean_update = function(){
     page.update_ids = [];
   }
+
   page.check_update = function(product){
     var index = page.update_ids.indexOf(product.id)
       if (index === -1) return false
     return true;
   }
+
   page.toggle_priority = function(product){
     var new_priority = !product.priority
     page.update_product(product, {priority: new_priority})
@@ -59,6 +61,7 @@ productsApp.controller('productsCtrl', function ($scope, $http) {
     $http.post('http://localhost:8000/api/update-product/' + product.id + '/', data).success(function(data) {
       product.priority = data.priority
       page.set_loading(false);
+      page.clean_update();
     });
   }
 
@@ -68,6 +71,7 @@ productsApp.controller('productsCtrl', function ($scope, $http) {
     $http.post('http://localhost:8000/api/update-many/', data).success(function(data) {
       page.get_products();
       page.set_loading(false);
+      page.clean_update();
     });
   }
 

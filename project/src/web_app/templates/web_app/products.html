@@ -3,34 +3,53 @@
 {% block content %}
 {% verbatim %}
 <div class="container" ng-app="productsApp"
-    <div class="container" ng-app="productsApp">
-      <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-text" href="/">Products</a>
-          </div>
+  <div class="container" ng-app="productsApp">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-text" href="/">Select products to priorize</a>
         </div>
-      </nav>
-        <table ng-controller="productsCtrl" class="table table-striped" ng-init="page.get_products()">
-		  <tr>
-			  <td><button ng-click="page.bulk_update(true)" >Priority</button></td>
-			  <td><button ng-click="page.bulk_update(false)">Not Priority</button></td>
-			  <td><button ng_click="page.clean_update()">Clean</button></td>
-		  </tr>
-          <tr ng-repeat="product in page.products | orderBy: '-priority'">
-            <td>{{ product.name }}</td>
-			<td><input type="checkbox" ng-click="page.toggle_mark_update(product)" ng-checked="page.check_update(product)"></td>
-            <td>
-				<span class="glyphicon" ng-click="page.toggle_priority(product)" ng-class="{'glyphicon-remove': !!product.priority, 'glyphicon-ok': !product.priority}"</span>
-            </td>
-          </tr>
-		  <tr>
-			  <td><button ng-click="page.bulk_update(true)" >Priority</button></td>
-			  <td><button ng-click="page.bulk_update(false)">Not Priority</button></td>
-			  <td><button ng_click="page.clean_update()">Clean</button></td>
-		  </tr>
-        </table>
+      </div>
+    </nav>
+    <div ng-controller="productsCtrl" ng-init="page.get_products()">
+      <div class="row">
+        <div class="col-xs-8">
+          <button ng_click="page.clean_update()" class="btn btn-default">Clean</button>
+        </div>
+        <div class="col-xs-2">
+          <button ng-click="page.bulk_update(false)" class="btn btn-default pull-right">Mark as not priority</button>
+        </div>
+        <div class="col-xs-2">
+          <button ng-click="page.bulk_update(true)" class="btn btn-primary pull-right">Mark as priority</button>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead class="thead-default">
+          <th>Select</th>
+          <th>Product</th>
+          <th>Priority</th>
+        </thead>
+        <tr ng-repeat="product in page.products | orderBy: '-priority'">
+          <td><input type="checkbox" ng-click="page.toggle_mark_update(product)" ng-checked="page.check_update(product)"></td>
+          <td>{{ product.name }}</td>
+          <td>
+            <span class="glyphicon" ng-click="page.toggle_priority(product)" ng-class="{'glyphicon-remove': !product.priority, 'glyphicon-ok': !!product.priority}"</span>
+          </td>
+        </tr>
+      </table>
+      <div class="row">
+        <div class="col-xs-8">
+          <button ng_click="page.clean_update()" class="btn btn-default">Clean</button>
+        </div>
+        <div class="col-xs-2">
+          <button ng-click="page.bulk_update(false)" class="btn btn-default pull-right">Mark as not priority</button>
+        </div>
+        <div class="col-xs-2">
+          <button ng-click="page.bulk_update(true)" class="btn btn-primary pull-right">Mark as priority</button>
+        </div>
+      </div>
     </div>
+  </div>
 {% endverbatim %}
 <script src="{% static 'js/products_app.js' %}"></script>
 {% endblock content %}
