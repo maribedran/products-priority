@@ -6,7 +6,6 @@ from model_mommy import mommy
 from django.core.urlresolvers import reverse
 
 from src.api.models import Product
-from src.api.views import ListProductsView
 
 
 class ListProductsViewTest(TestCase):
@@ -41,7 +40,15 @@ class UpdateProductViewTest(TestCase):
 
     def setUp(self):
         self.url = reverse('api:update_product', args=[42])
-        self.product = mommy.make(Product, id=42, priority=False)
+        self.product = mommy.make(Product, id=42, priority=False, name='Name')
+
+    def test_get_shows_products_info_correctly(self):
+        response = self.client.get(self.url)
+        self.assertEqual(200, response.status_code)
+        response_content = json.loads(response.content)
+        self.assertEqual('Name', response_content['name'])
+        self.assertEqual(42, response_content['id'])
+        self.assertFalse(response_content['priority'])
 
     def test_post_updates_product_correctly(self):
         response = self.client.post(self.url, {'priority': True})

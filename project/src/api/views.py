@@ -11,7 +11,7 @@ class ListProductsView(generics.ListAPIView):
     serializer_class = ProductSerializer
 
 
-class UpdateProductView(generics.UpdateAPIView):
+class UpdateProductView(generics.RetrieveUpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_url_kwarg = 'product_id'
